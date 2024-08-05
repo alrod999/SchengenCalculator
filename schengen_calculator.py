@@ -31,14 +31,16 @@ def calculate_stay(entries_list, exits_list, future_entry, process_date: bool = 
     return days_stayed
 
 
-def calculate_allowed_stay(entries_list, exits_list, future_entry):
+def calculate_allowed_stay(entries_list, exits_list, future_entry) -> int:
+    if not entries_list:
+        return 90
     entries_list = parse_dates(entries_list)
     exits_list = parse_dates(exits_list)
     future_entry = parse_dates([future_entry])[0]
     allow_days: int = 0
     calculate_point = future_entry
     entries_list.append(future_entry)
-    while 0 < calculate_stay(
+    while calculate_stay(
             entries_list,
             exits_list + [calculate_point],
             calculate_point,
